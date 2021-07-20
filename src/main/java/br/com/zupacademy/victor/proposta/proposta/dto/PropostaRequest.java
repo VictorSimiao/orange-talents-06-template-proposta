@@ -8,10 +8,13 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.util.Assert;
+import org.springframework.web.server.ResponseStatusException;
 
 import br.com.zupacademy.victor.proposta.proposta.model.Endereco;
 import br.com.zupacademy.victor.proposta.proposta.model.Proposta;
+import br.com.zupacademy.victor.proposta.proposta.repository.PropostaRepository;
 import br.com.zupacademy.victor.proposta.validation.annotations.CPForCNPJ;
 
 public class PropostaRequest {
@@ -47,12 +50,14 @@ public class PropostaRequest {
 		return endereco;
 	}
 
-	public Proposta tomodel() {
+	public Proposta tomodel(PropostaRepository propostaRepository) {
+		if (propostaRepository.findByDocumento(documento).isPresent()) {
+			throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,
+					"Já existe uma proposta para esse solicitante");
+		}
 		Endereco enderecoProposta = endereco.toModel();
 		Assert.notNull(enderecoProposta, "Proposta não pode ter um endereço vazio");
-		return new Proposta(documento,email,nome,salario,enderecoProposta);
+		return new Proposta(documento, email, nome, salario, enderecoProposta);
 	}
-
-	
 
 }

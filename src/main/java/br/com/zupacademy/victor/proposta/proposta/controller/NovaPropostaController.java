@@ -28,7 +28,7 @@ public class NovaPropostaController {
 	@PostMapping
 	public ResponseEntity<?> criaProposta(@RequestBody @Valid PropostaRequest request,
 			UriComponentsBuilder uriBuilder) {
-		Proposta novaProposta = request.tomodel();
+		Proposta novaProposta = request.tomodel(propostaRepository);
 		propostaRepository.save(novaProposta);
 		URI uri = uriBuilder.path("/api/propostas/{id}").buildAndExpand(novaProposta.getId()).toUri();
 		return ResponseEntity.created(uri).build();

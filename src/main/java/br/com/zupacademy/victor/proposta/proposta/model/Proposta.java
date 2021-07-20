@@ -38,6 +38,11 @@ public class Proposta {
 	@NotNull
 	@Embedded
 	private Endereco enderecoProposta;
+	
+	@Deprecated
+	public Proposta() {
+	
+	}
 
 	public Proposta(@CPForCNPJ String documento, @NotBlank @Email String email, @NotBlank String nome,
 			@NotNull @Positive BigDecimal salario, @NotNull Endereco enderecoProposta) {
