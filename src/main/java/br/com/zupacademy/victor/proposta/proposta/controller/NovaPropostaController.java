@@ -27,7 +27,7 @@ public class NovaPropostaController {
 
 	private PropostaRepository propostaRepository;
 	private AnaliseDePropostaClient analiseCliente;
-
+	
 	public NovaPropostaController(PropostaRepository propostaRepository, AnaliseDePropostaClient analiseCliente) {
 		this.propostaRepository = propostaRepository;
 		this.analiseCliente = analiseCliente;
@@ -37,7 +37,7 @@ public class NovaPropostaController {
 	public ResponseEntity<?> criaProposta(@RequestBody @Valid PropostaRequest request,
 			UriComponentsBuilder uriBuilder) {
 		Proposta novaProposta = request.tomodel(propostaRepository);
-
+		
 		try {
 			AnalisePropostaResponse analiseResponse = analiseCliente
 					.realizarAnalise(new AnalisePropostaRequest(novaProposta));
