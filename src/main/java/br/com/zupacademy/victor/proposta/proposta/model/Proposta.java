@@ -78,6 +78,10 @@ public class Proposta {
 	public void setStatus(StatusProposta status) {
 		this.status = status;
 	}
+	
+	public StatusProposta getStatus() {
+		return status;
+	}
 
 	public void setCartao(Cartao cartao) {
 		this.cartao = cartao;
