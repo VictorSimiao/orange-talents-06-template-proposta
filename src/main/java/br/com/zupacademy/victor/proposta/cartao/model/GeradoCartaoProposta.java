@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 import br.com.zupacademy.victor.proposta.cartao.dto.CartaoRequest;
 import br.com.zupacademy.victor.proposta.cartao.dto.CartaoResponse;
+import br.com.zupacademy.victor.proposta.cartao.feign.CartaoFeignApi;
 import br.com.zupacademy.victor.proposta.cartao.repository.CartaoRepository;
-import br.com.zupacademy.victor.proposta.proposta.clientfeign.GeraCartaoClient;
 import br.com.zupacademy.victor.proposta.proposta.model.Proposta;
 import br.com.zupacademy.victor.proposta.proposta.repository.PropostaRepository;
 import feign.FeignException;
@@ -20,12 +20,12 @@ public class GeradoCartaoProposta {
 
 	private PropostaRepository propostaRepository;
 	private CartaoRepository cartaoRepository;
-	private GeraCartaoClient geraCartaoClient;
+	private CartaoFeignApi geraCartaoClient;
 
 	private final Logger log = LoggerFactory.getLogger(GeradoCartaoProposta.class);
 
 	public GeradoCartaoProposta(PropostaRepository propostaRepository, CartaoRepository cartaoRepository,
-			GeraCartaoClient geraCartaoClient) {
+			CartaoFeignApi geraCartaoClient) {
 		this.propostaRepository = propostaRepository;
 		this.cartaoRepository = cartaoRepository;
 		this.geraCartaoClient = geraCartaoClient;

@@ -68,4 +68,8 @@ public class Cartao {
 			this.status = StatusCartao.BLOQUEADO;
 		}
 	}
+
+	public String getNumeroCartao() {
+		return numeroCartao;
+	}
 }
