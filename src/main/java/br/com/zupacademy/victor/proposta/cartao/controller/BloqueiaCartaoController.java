@@ -1,0 +1,46 @@
+package br.com.zupacademy.victor.proposta.cartao.controller;
+
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import br.com.zupacademy.victor.proposta.cartao.model.Cartao;
+import br.com.zupacademy.victor.proposta.cartao.repository.CartaoRepository;
+
+@RestController
+@RequestMapping("api/cartoes")
+public class BloqueiaCartaoController {
+
+	private CartaoRepository cartaoRepository;
+
+	public BloqueiaCartaoController(CartaoRepository cartaoRepository) {
+		this.cartaoRepository = cartaoRepository;
+	}
+
+	@PostMapping("/{id}/bloqueios")
+	public ResponseEntity<?> bloqueiaCartao(@PathVariable Integer id,HttpServletRequest servletRequest) {
+
+		Optional<Cartao> possivelCartao = cartaoRepository.findById(id);
+
+		if (possivelCartao.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		if (possivelCartao.get().isBloqueado()) {
+			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+		}
+		
+		String idCliente = servletRequest.getRemoteAddr();
+		String userAgent = servletRequest.getHeader("User-Agent");
+		
+		possivelCartao.get().efetuaBloqueio(idCliente, userAgent);
+		cartaoRepository.save(possivelCartao.get());
+		return ResponseEntity.ok().build();
+	}
+}
