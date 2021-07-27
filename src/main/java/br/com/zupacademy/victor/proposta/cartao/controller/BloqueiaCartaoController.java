@@ -30,9 +30,9 @@ public class BloqueiaCartaoController {
 	}
 
 	@PostMapping("/{id}/bloqueios")
-	public ResponseEntity<?> bloqueiaCartao(@PathVariable("id") String id, HttpServletRequest servletRequest) {
+	public ResponseEntity<?> bloqueiaCartao(@PathVariable("id") Integer id, HttpServletRequest servletRequest) {
 
-		Optional<Cartao> possivelCartao = cartaoRepository.findByNumeroCartao(id);
+		Optional<Cartao> possivelCartao = cartaoRepository.findById(id);
 
 		if (possivelCartao.isEmpty()) {
 			return ResponseEntity.notFound().build();

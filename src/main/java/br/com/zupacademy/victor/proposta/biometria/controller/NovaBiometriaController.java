@@ -31,11 +31,11 @@ public class NovaBiometriaController {
 		this.biometriaRepository = biometriaRepository;
 	}
 
-	@PostMapping("/{numeroCartao}/biometria")
-	public ResponseEntity<?> cadastrar(@PathVariable String numeroCartao,
+	@PostMapping("/{id}/biometria")
+	public ResponseEntity<?> cadastrar(@PathVariable("id") Integer id,
 			@RequestBody @Valid BiometriaRequest request,UriComponentsBuilder uriBuilder) {
 		
-		Optional<Cartao> possivelCartao = cartaoRepository.findByNumeroCartao(numeroCartao);
+		Optional<Cartao> possivelCartao = cartaoRepository.findById(id);
 		
 		if (possivelCartao.isEmpty()) {
 			return ResponseEntity.notFound().build();
