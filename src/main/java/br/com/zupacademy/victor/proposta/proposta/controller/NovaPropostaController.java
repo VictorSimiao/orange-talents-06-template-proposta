@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import br.com.zupacademy.victor.proposta.infraestrutura.metrica.MetricaAplicacao;
 import br.com.zupacademy.victor.proposta.proposta.clientfeign.AnaliseDePropostaClient;
 import br.com.zupacademy.victor.proposta.proposta.dto.AnalisePropostaRequest;
 import br.com.zupacademy.victor.proposta.proposta.dto.AnalisePropostaResponse;
@@ -27,11 +28,15 @@ public class NovaPropostaController {
 
 	private PropostaRepository propostaRepository;
 	private AnaliseDePropostaClient analiseCliente;
+	private MetricaAplicacao metricaAplicacao;
 	
-	public NovaPropostaController(PropostaRepository propostaRepository, AnaliseDePropostaClient analiseCliente) {
+	public NovaPropostaController(PropostaRepository propostaRepository, AnaliseDePropostaClient analiseCliente,
+			MetricaAplicacao metricaAplicacao) {
 		this.propostaRepository = propostaRepository;
 		this.analiseCliente = analiseCliente;
+		this.metricaAplicacao = metricaAplicacao;
 	}
+
 
 	@PostMapping
 	public ResponseEntity<?> criaProposta(@RequestBody @Valid PropostaRequest request,
@@ -47,7 +52,7 @@ public class NovaPropostaController {
 			propostaRepository.save(novaProposta);
 			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
 		}
-
+		metricaAplicacao.meuContador();
 		propostaRepository.save(novaProposta);
 
 		URI uri = uriBuilder.path("/api/propostas/{id}").buildAndExpand(novaProposta.getId()).toUri();
