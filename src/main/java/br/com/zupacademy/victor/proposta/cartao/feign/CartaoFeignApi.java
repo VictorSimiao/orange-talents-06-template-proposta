@@ -11,6 +11,8 @@ import br.com.zupacademy.victor.proposta.cartao.dto.BloqueioRequest;
 import br.com.zupacademy.victor.proposta.cartao.dto.CartaoRequest;
 import br.com.zupacademy.victor.proposta.cartao.dto.CartaoResponse;
 import br.com.zupacademy.victor.proposta.cartao.dto.StatusCartaoResponse;
+import br.com.zupacademy.victor.proposta.carteira.dto.CarteiraRequest;
+import br.com.zupacademy.victor.proposta.carteira.dto.CarteiraResponse;
 import br.com.zupacademy.victor.proposta.viagem.dto.AvisoRequest;
 import br.com.zupacademy.victor.proposta.viagem.dto.AvisoResponse;
 
@@ -25,4 +27,7 @@ public interface CartaoFeignApi {
 	
 	@PostMapping("${cartao.aviso}")
 	AvisoResponse notificaSistemaBancarioViagem(@PathVariable("id") String id, @RequestBody @Valid AvisoRequest request);
+	
+	@PostMapping("${cartao.carteira}")
+	CarteiraResponse associaCartao(@PathVariable("id") String id, @RequestBody @Valid CarteiraRequest request);
 }
