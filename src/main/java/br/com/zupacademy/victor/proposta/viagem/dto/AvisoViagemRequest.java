@@ -21,7 +21,10 @@ public class AvisoViagemRequest {
 	@FutureOrPresent
 	@JsonFormat(pattern = "dd/MM/yyyy", shape = Shape.STRING)
 	private LocalDate dataTermio;
-
+	/**
+	 * Criado somente para o JSON desserializar o LocalDate
+	 */
+	@Deprecated
 	public AvisoViagemRequest() {
 	}
 
@@ -38,4 +41,7 @@ public class AvisoViagemRequest {
 		return destinoViagem;
 	}
 
+	public LocalDate getDataTermio() {
+		return dataTermio;
+	}
 }
