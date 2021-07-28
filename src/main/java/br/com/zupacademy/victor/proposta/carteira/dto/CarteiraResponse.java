@@ -21,11 +21,5 @@ public class CarteiraResponse {
 	public String getId() {
 		return id;
 	}
-
-	@Override
-	public String toString() {
-		return "CarteiraResponse [resultado=" + resultado + ", id=" + id + "]";
-	}
-	
 	
 }
