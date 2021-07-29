@@ -21,6 +21,8 @@ import br.com.zupacademy.victor.proposta.proposta.model.Proposta;
 import br.com.zupacademy.victor.proposta.proposta.model.StatusProposta;
 import br.com.zupacademy.victor.proposta.proposta.repository.PropostaRepository;
 import feign.FeignException;
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 
 @RestControllerAdvice
 @RequestMapping("api/propostas")
@@ -29,18 +31,26 @@ public class NovaPropostaController {
 	private PropostaRepository propostaRepository;
 	private AnaliseDePropostaClient analiseCliente;
 	private MetricaAplicacao metricaAplicacao;
+	private Tracer tracer;
 	
 	public NovaPropostaController(PropostaRepository propostaRepository, AnaliseDePropostaClient analiseCliente,
-			MetricaAplicacao metricaAplicacao) {
+			MetricaAplicacao metricaAplicacao, Tracer tracer) {
 		this.propostaRepository = propostaRepository;
 		this.analiseCliente = analiseCliente;
 		this.metricaAplicacao = metricaAplicacao;
+		this.tracer = tracer;
 	}
+
+
 
 
 	@PostMapping
 	public ResponseEntity<?> criaProposta(@RequestBody @Valid PropostaRequest request,
 			UriComponentsBuilder uriBuilder) {
+		
+		Span activeSpan = tracer.activeSpan();
+		activeSpan.setBaggageItem("user.email", "orangetalents@zup.com.br");
+		
 		Proposta novaProposta = request.tomodel(propostaRepository);
 		
 		try {
