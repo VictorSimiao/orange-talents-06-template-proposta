@@ -41,9 +41,6 @@ public class NovaPropostaController {
 		this.tracer = tracer;
 	}
 
-
-
-
 	@PostMapping
 	public ResponseEntity<?> criaProposta(@RequestBody @Valid PropostaRequest request,
 			UriComponentsBuilder uriBuilder) {
