@@ -2,6 +2,7 @@ package br.com.zupacademy.victor.proposta.proposta.model;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Convert;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -16,6 +17,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 import br.com.zupacademy.victor.proposta.cartao.model.Cartao;
+import br.com.zupacademy.victor.proposta.criptografia.ConversorCriptografia;
 import br.com.zupacademy.victor.proposta.validation.annotations.CPForCNPJ;
 
 @Entity
@@ -26,6 +28,7 @@ public class Proposta {
 	private Integer id;
 
 	@CPForCNPJ
+	@Convert(converter = ConversorCriptografia.class)
 	private String documento;
 
 	@NotBlank
